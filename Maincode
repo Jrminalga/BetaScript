@@ -27,11 +27,11 @@ local Window = Rayfield:CreateWindow({
     }
 })
 
-local MainTab = Window:CreateTab("Main", 4483362458)
-local AutoTab = Window:CreateTab("Automation", 4483362458)
-local UITab = Window:CreateTab("Visuals", 4483362458)
-local SettingsTab = Window:CreateTab("Settings", 4483362458)
-local CredTab = Window:CreateTab("Credits", 4483362458)
+local MainTab = Window:CreateTab("Main", "apple")
+local AutoTab = Window:CreateTab("Automation", "repeat")
+local UITab = Window:CreateTab("Visuals", "eye")
+local SettingsTab = Window:CreateTab("Settings", "settings")
+local CredTab = Window:CreateTab("Credits", "scroll")
 
 -- Theme Selector Dropdown
 local ThemeDropdown = SettingsTab:CreateDropdown({
@@ -710,6 +710,15 @@ local ESPToggle = UITab:CreateToggle({
     Flag = "ESPEnabled",
     Callback = function(value)
         ESP.Enabled = value
+        
+        -- Show notification with different icons
+        Rayfield:Notify({
+            Title = "ESP Status",
+            Content = value and "ESP is now active" or "ESP is now inactive",
+            Duration = 3,
+            Image = value and "eye" or "eye-off",
+        })
+
         if not value then
             for _, esp in pairs(ESPObjects) do
                 esp.box.Visible = false
@@ -885,7 +894,7 @@ local ChangeKeybindButton = AutoTab:CreateButton({
             Title = "Keybind Change",
             Content = "Press any key or mouse button to set as the new aim key",
             Duration = 5,
-            Image = nil,
+            Image = "keyboard",
             Actions = {
                 Cancel = {
                     Name = "Cancel",
@@ -921,7 +930,7 @@ UIS.InputBegan:Connect(function(input, gameProcessed)
             Title = "Keybind Changed",
             Content = "New aim key set to: " .. tostring(currentKeybind),
             Duration = 3,
-            Image = nil,
+            Image = "keyboard",
         })
     end
 end)
@@ -933,6 +942,13 @@ local AimAssistToggle = AutoTab:CreateToggle({
     Flag = "AimBotToggle",
     Callback = function(Value)
         _G.AimAssistEnabled = Value
+        
+        Rayfield:Notify({
+            Title = "Aimbot Status",
+            Content = Value and "Aimbot is now active" or "Aimbot is now inactive",
+            Duration = 3,
+            Image = Value and "swords" or "circle-off",
+        })
     end,
 })
 
@@ -1115,7 +1131,7 @@ local function teleportToRandomEnemy()
             Title = "Teleport Failed",
             Content = "Your character doesn't exist",
             Duration = 3,
-            Image = 4483362458
+            Image = "captions-off"
         })
         return false 
     end
@@ -1126,7 +1142,7 @@ local function teleportToRandomEnemy()
             Title = "Teleport Failed",
             Content = "HumanoidRootPart not found",
             Duration = 3,
-            Image = 4483362458
+            Image = "captions-off"
         })
         return false 
     end
@@ -1138,7 +1154,7 @@ local function teleportToRandomEnemy()
             Title = "Teleport Failed",
             Content = "No valid enemies found",
             Duration = 3,
-            Image = 4483362458
+            Image = "captions-off"
         })
         return false
     end
@@ -1156,7 +1172,7 @@ local function teleportToRandomEnemy()
         Title = "Teleport Success",
         Content = "Teleported to enemy",
         Duration = 1,
-        Image = 4483362458
+        Image = "car"
     })
     return true
 end
@@ -1189,7 +1205,7 @@ local TeleportKeybind = AutoTab:CreateKeybind({
                 Title = "System Disabled",
                 Content = "Enable the teleport system first",
                 Duration = 3,
-                Image = 4483362458
+                Image = "captions-off"
             })
         end
     end,
@@ -1245,7 +1261,7 @@ AutoTab:CreateButton({
                 Title = "System Disabled",
                 Content = "Enable the teleport system first",
                 Duration = 3,
-                Image = 4483362458
+                Image = "captions-off"
             })
         end
     end,
